@@ -1,0 +1,57 @@
+****************    POSTMAN    ****************
+
+Postman is an interactive and automatic tool for verifying the APIs of your project.
+Postman is a Google Chrome app for interacting with HTTP APIS.
+
+It presents you with a friendly GUI for constructing requests and reading responses. It
+works on the backend, and makes sure that each API is working as intended.
+
+
+****************    REST API    ****************   
+
+"REpresentational State Transfer" Application Programming Interface
+
+    It is a software that allows two applications to communicate with each other over the internet and through
+various devices. Every time you access an app like Facebook or check the weather on your smartphone, an
+API is used.
+
+    A RESTful API is an architectural style for an application program interface (API) that uses HTTP
+requests to access and use data. ***REST is not a programming language***
+        another examples:- soap, GraphQL
+
+_______________________________________________________________________________________________________
+| HTTP Verb    |   Path             |   Action       |  Used for                                      |
+| -------------|--------------------|----------------|------------------------------------------------|
+| GET          |   /photos          |   index        |  display a list of all photos                  |
+| GET          |   /photos/new      |   new          |  return an HTML form for creating a new photos |
+| POST         |   /photos          |   create       |  create a new photos                           |
+| GET          |   /photos/id       |   show         |  display a specific photos                     |
+| GET          |   /photos/id/edit  |   edit         |  return an HTML form for editing photo         |
+| PATCH/PUT    |   /photos/id       |   update       |  update a specific photo                       |
+| DELETE       |   /photos/id       |   destroy      |  delete a specific photo                       |
+|______________|____________________|________________|________________________________________________| 
+
+___________________________________________________________________ 
+|OPERATION  |     VERB      | WRONG WAY        |    CORRECT WAY    | 
+|-----------|---------------|------------------|-------------------|
+| CREATE    |      POST     | /api/createUser  | POST   /api/users |
+|           |               |                  |                   |  
+| READ      |      GET      | /api/getUser     | GET    /api/users |
+|           |               |                  |                   |  
+| UPDATE    |   PUT  PATCH  | /api/updateUser  | PUT    /api/users |
+|           |               |                  |                   |  
+| DELETE    |     DELETE    | /api/deleteUser  | DELETE /api/users |
+|___________|_______________|__________________|___________________|
+
+** PUT -  complete makeover    PATCH - partial update
+** resources should be same for all operations
+** to get data using particular id 
+    /api/users/:id
+
+
+Statelessness
+-----------------------------
+    As per the REST (REpresentational "State" Transfer) architecture, the server does not
+store any state about the client session on the server-side. Statelessness means that
+every HTTP request happens in complete isolation. When the client makes an HTTP request,
+it includes all information necessary for the server to fulfill that request.

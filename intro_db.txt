@@ -1,0 +1,276 @@
+*****************   MONGODB    <--->    NOSQL  *****************
+
+-> uses BSON  (Binary JSON)
+
+Default port == 27017
+
+SQL     --      Table       -   Rows        -   Columns
+NOSQL   --      Collection  -   Document    -   Fields
+
+----------------------------------------- 
+                FUNCTIONS
+----------------------------------------- 
+
+-> dropDatabase()           =   drops existing database
+-> drop()                   =   drops mentioned collection
+-> insertOne()              =   inserts one document
+-> insertMany()             =   inserts multiple documents
+-> find()                   =   returns all the documents
+-> findOne()                =   returns one document
+-> pretty()                 =   returns the documents in a pretty way
+-> limit()                  =   limits the given the number of fields
+-> skip()                   =   skips the given number of fields
+-> sort()                   =   sorts the document
+-> updateOne()              =   updates one field
+-> updateMany()             =   updates multiple fields
+-> findOneAndUpdate()       =   finds and updates the values in the existing document
+-> findByIdAndUpdate()      =   finds by Id and updates the value in the existing document
+-> save()                   =   replaces the existing document with the new document 
+-> deleteMany()             =   deletes fields
+-> countDocuments()         =   returns the count of total documents
+-> findOneAndDelete()       =   finds and deletes document
+-> findByIdAndDelete()      =   finds by Id and deletes document
+
+----------------------------------------- 
+                OPERATORS
+----------------------------------------- 
+
+** "$" represents operator **
+
+-> $set        =   updates the field  
+LOGICAL OPERATORS
+    -> $and     =   and operation
+    -> $or      =   or operation on an array of two or more expressions
+    -> $not     =   not operation
+    -> $nor     =   nor operation
+COMPARISON OPERATORS
+    -> $eq      =   Matches values that are equal to a specified value.
+    -> $gt      =   Matches values that are greater than a specified value.
+    -> $gte     =   Matches values that are greater than or equal to a specified value.
+    -> $in      =   Matches any of the values specified in an array.
+    -> $lt      =   Matches values that are less than a specified value.
+    -> $lte     =   Matches values that are less than or equal to a specified value.
+    -> $ne      =   Matches all values that are not equal to a specified value.
+    -> $nin     =   Matches none of the values specified in an array.
+AGGREGATE OPERATORS
+    -> $sum	       =   adds up the definite values of every document of a collection.
+    -> $avg	       =   computes the average values of every document of a collection.
+    -> $min	       =   finds and returns the minimum of all values from within a collection.
+    -> $max	       =   finds and returns the maximum of all values from within a collection.
+    -> $push       =   feeds in the values to an array in the associated document.
+    -> $first      =   fetches out the first document.
+    -> $last	   =   fetches out the last document.
+    -> $addToSet   =   feeds in the values to an array without duplication.
+
+****************************************************************************
+****************************************************************************
+
+** There should be atleast one collection in the database 
+** key should be quoted and they will be added automically if we miss
+** ID for document is created automically if we didn't mention
+
+> show dbs 
+    to show databases avaliable
+
+> use "database_name"
+    creates and selects the database
+
+> db   
+    shows currently active database
+
+----------------------------------------- 
+                CREATE
+----------------------------------------- 
+
+> db.COLLECTION_NAME.insertOne({ key: "value", ....})
+    insertOne is used to create one Document and add the fields
+
+> db.COLLECTION_NAME.insertMany({ key: "value", ....},{ }, { }, { })
+    insertMany is used to create multiple Document and add the fields
+
+
+----------------------------------------- 
+                READ
+----------------------------------------- 
+> show collections
+    returns the list of collections
+
+> db.COLLECTION_NAME.find()
+    returns the list of documents present in a single line
+
+> db.COLLECTION_NAME.find().pretty()
+    returns the list of documents present in a formatted style
+
+> db.COLLECTION_NAME.find(<query>, <projection>)
+    -> query       -- your query
+            * it is an object 
+            * we can pass multiple key:value 
+    -> projection  -- returns the documents for the given query
+            * it is an object
+            * we can pass multiple key: <status>
+            * key: 0    == returns all the fields except this field
+            * key: 1    == returns only this particular field
+    -->> SYNTAX
+        db.COLLECTION_NAME.find({ key: "value", ....}, { key: 0}).pretty()
+        db.COLLECTION_NAME.find({ key: "value", ....}, { key: 1,key: 1}).pretty()
+
+> db.COLLECTION_NAME.find(<query>, <projection>).pretty().limit(<lim_val>)
+    returns <lim_val> number of documents which satisfies the given query
+
+> db.COLLECTION_NAME.find(<query>, <projection>).pretty().limit(<lim_val>).skip(<skip_val>)
+    returns <lim_val> number of documents which satisfies the given query by skipping <skip_val> documents
+
+> db.COLLECTION_NAME.findOne(<query>, <projection>)
+    returns the first document in the collection which satisfies the given query
+    -> pretty() funciton doesn't works for findOne()
+
+> db.COLLECTION_NAME.find({ $and: [ {<key1>:<value1>}, { <key2>:<value2>} ] }    =  AND operation
+> db.COLLECTION_NAME.find({ $or: [ {<key1>:<value1>}, { <key2>:<value2>} ] })    =  OR operation
+> db.COLLECTION_NAME.find({ $not: [ {<key1>:<value1>}, { <key2>:<value2>} ] })   =  NOT operation
+
+> db.COLLECTION_NAME.find( { "Age": { $not: { $gt: "25" } } } )
+    returns the documents whose age is not greater than 25
+
+> db.COLLECTION_NAME.find().sort({key:<order>})
+    * order  =   1 is used for ascending order 
+    * order  =  -1 is used for descending order
+
+
+----------------------------------------- 
+                UPDATE
+----------------------------------------- 
+
+> db.COLLECTION_NAME.updateOne(<filter>, <update>)
+
+    ** updates only the first document which satisfies the given filter
+
+    -> filter  --   your filter
+            * It is an object 
+            * We can pass multiple key:value 
+    -> update -- to update with new value
+            * It is an object.
+            * This object consists of a key "$set:" and the value consists of the updated field.
+            * $set operator replaces the value of a field with the specified value. 
+    -->> SYNTAX
+        db.COLLECTION_NAME.updateOne({ key: value }, { $set: { key: value } })
+        
+> db.COLLECTION_NAME.updateMany(<filter>, <update>)
+> db.COLLECTION_NAME.update(<filter>, <update>,{multi:true})
+
+    ** updates all the documents which satisfies the given filter
+
+> db.COLLECTION_NAME.save({_id:ObjectId(),NEW_DATA})
+
+----------------------------------------- 
+                DELETE
+----------------------------------------- 
+
+> db.COLLECTION_NAME.deleteMany(<deletion_criteria>)
+    deletes the documents which satisfies the given deletion_criteria
+
+> db.COLLECTION_NAME.deleteMany({})
+    deletes all the documents
+
+> db.dropDatabase()
+    drops existing database
+
+> db.COLLECTION_NAME.drop()
+    drops the selected collection
+
+
+----------------------------------------- 
+                DATA TYPES
+----------------------------------------- 
+
+-> String − This is the most commonly used datatype to store the data. String in MongoDB must be UTF-8 valid.
+ 
+-> Integer − This type is used to store a numerical value. Integer can be 32 bit or 64 bit depending upon your server.
+ 
+-> Boolean − This type is used to store a boolean (true/ false) value.
+ 
+-> Double − This type is used to store floating point values.
+ 
+-> Min/ Max keys − This type is used to compare a value against the lowest and highest BSON elements.
+ 
+-> Arrays − This type is used to store arrays or list or multiple values into one key.
+ 
+-> Timestamp − ctimestamp. This can be handy for recording when a document has been modified or added.
+ 
+-> Object − This datatype is used for embedded documents.
+ 
+-> Null − This type is used to store a Null value.
+ 
+-> Symbol − This datatype is used identically to a string; however, it's generally reserved for languages that use a specific symbol type.
+ 
+-> Date − This datatype is used to store the current date or time in UNIX time format. You can specify your own date time by creating object of Date and passing day, month, year into it.
+ 
+-> Object ID − This datatype is used to store the document’s ID.
+ 
+-> Binary data − This datatype is used to store binary data.
+ 
+-> Code − This datatype is used to store JavaScript code into the document.
+ 
+-> Regular expression − This datatype is used to store regular expression.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----------------------------------------- 
+                AGGREGATE
+----------------------------------------- 
+
+let the collections be
+{
+   title: 'MongoDB Overview', 
+   description: 'MongoDB is no sql database',
+   by_user: 'tutorials point',
+   url: 'http://www.tutorialspoint.com',
+   tags: ['mongodb', 'database', 'NoSQL'],
+   likes: 100
+},
+{
+   title: 'NoSQL Overview', 
+   description: 'No sql database is very fast',
+   by_user: 'tutorials point',
+   url: 'http://www.tutorialspoint.com',
+   tags: ['mongodb', 'database', 'NoSQL'],
+   likes: 10
+},
+{
+   title: 'Neo4j Overview', 
+   description: 'Neo4j is no sql database',
+   by_user: 'Neo4j',
+   url: 'http://www.neo4j.com',
+   tags: ['neo4j', 'database', 'NoSQL'],
+   likes: 750
+}
+
+> db.COLLECTION_NAME.aggregate([{$group : {_id : "$by_user", num_tutorial : {$sum : "$likes"}}}])
+
+> db.COLLECTION_NAME.aggregate([{$group : {_id : "$by_user", num_tutorial : {$avg : "$likes"}}}])
+
+> db.COLLECTION_NAME.aggregate([{$group : {_id : "$by_user", num_tutorial : {$min : "$likes"}}}])
+
+> db.COLLECTION_NAME.aggregate([{$group : {_id : "$by_user", num_tutorial : {$max : "$likes"}}}])
+
+> db.COLLECTION_NAME.aggregate([{$group : {_id : "$by_user", url : {$push: "$url"}}}])
+
+> db.COLLECTION_NAME.aggregate([{$group : {_id : "$by_user", url : {$addToSet : "$url"}}}])
+
+> db.COLLECTION_NAME.aggregate([{$group : {_id : "$by_user", first_url : {$first : "$url"}}}])
+
+> db.COLLECTION_NAME.aggregate([{$group : {_id : "$by_user", last_url : {$last : "$url"}}}])
