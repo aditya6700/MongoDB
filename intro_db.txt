@@ -7,6 +7,14 @@ Default port == 27017
 SQL     --      Table       -   Rows        -   Columns
 NOSQL   --      Collection  -   Document    -   Fields
 
+NOTE:
+    ‘_id’ is the special key which get automatically added if the programmer forgets to add explicitly.
+ _id is the 12 bytes hexadecimal number which assures the uniqueness of every inserted document.
+ 
+examole: _id: 7df78ad8902c
+       7df7              8ad             89                    02c
+current Timestamp   Machine id      Process id          Incremented value
+
 ----------------------------------------- 
                 FUNCTIONS
 ----------------------------------------- 
@@ -213,22 +221,6 @@ AGGREGATE OPERATORS
 -> Regular expression − This datatype is used to store regular expression.
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ----------------------------------------- 
                 AGGREGATE
 ----------------------------------------- 
@@ -274,3 +266,42 @@ let the collections be
 > db.COLLECTION_NAME.aggregate([{$group : {_id : "$by_user", first_url : {$first : "$url"}}}])
 
 > db.COLLECTION_NAME.aggregate([{$group : {_id : "$by_user", last_url : {$last : "$url"}}}])
+
+
+
+----------------------------------------------------------
+                MongoDB with Python
+----------------------------------------------------------
+
+** Library needeed
+    pip install pymongo
+
+-> list_collection_names()      =   To check if collection exists or not
+-> list_database_names()        =   To check if database exists or not
+-> insert_one()                 =   Insert one document
+-> insert_many()                =   Insert multiple documents
+-> find()                       =   Find documents
+-> sort()                       =   Sorting fields 
+
+    db.COLLECTION_NAME.find().sort(<key>,<order>)
+    * order  =   1 is used for ascending order 
+    * order  =  -1 is used for descending order
+
+-> find_one_and_update()        =   Find one document and uopdate it
+
+        from pymongo import ReturnDocument 
+
+        updateDb1 = db.COLLECTION_NAME.find_one_and_update(
+            <filter>,
+            {"$set": <update_value>}, 
+            projection = { <key> : <tag>}, 
+            return_document = ReturnDocument.AFTER
+            )
+        
+        * tag 0  ==  returns all the fields except this field
+        * tag 1  ==  returns only this particular field
+
+-> delete_one()                 =   Deltes exactly one document
+-> delete_many()                =   Deletes multiple documents
+-> remove()                     =   Remove all the collections in the database 
+-> drop()                       =   To delete a collection

@@ -1,0 +1,21 @@
+[
+    {
+        "name": "Sai mounika",
+        "course": "Python",
+        "age": 21,
+        "active": true,
+        "address": "Medchal",
+        "email": "mouika@gmail.com",
+        "phone": 9908749642
+    },
+    {
+        "name": "Sai Kiran",
+        "course": "Python",
+        "age": 20,
+        "active": true,
+        "address": "gajwel",
+        "email": "kiranjaligama@gmail.com",
+        "phone": 7901023690
+    }
+    
+]
