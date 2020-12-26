@@ -52,10 +52,10 @@ const Doc = mongoose.model("Doc",myDataSchema);
 const createDoc = async () => {
     try {
         const doc1 = new Doc({
-            name   : "root",
+            name   : "koundinya",
             course : "reactjs",
             age    : 20,
-            email  : "aditya.mas@root.com",
+            email  : "koundinyas@root.com",
             active : true
         })
 
